@@ -16,7 +16,6 @@ class Match(models.Model):
         (TEAM_B, u'Team B'),
     )
 
-    name = models.CharField(u'match name', max_length=255)
     match_date = models.DateTimeField(u'match date', default=datetime.now)
     team_a_players = models.ManyToManyField(Player, related_name='team_a_players')
     team_a_team = models.ForeignKey(Team, related_name='team_a_team')
@@ -29,12 +28,12 @@ class Match(models.Model):
         verbose_name, verbose_name_plural = u'match', u'matchs'
 
     def __unicode__(self):
-        return self.name
+        return '%s' % self.match_date
 
     def save(self, *args, **kwargs):
         obj = super(Match, self).save(*args, **kwargs)
-        win = {}
-        loss = {}
+        win = []
+        loss = []
         if self.victory == self.TEAM_A:
             winners = self.team_a_players.all()
             lossers = self.team_b_players.all()
@@ -47,20 +46,17 @@ class Match(models.Model):
         for player in winners:
             player.victories += 1
             player.save()
-            win.update({
-                player.id: (player.ranking, self.FACTOR),
-            })
+            win.append((player.id, (player.ranking, self.FACTOR)))
 
         for player in lossers:
             player.losses += 1
             player.save()
-            loss.update({
-                player.id: (player.ranking, self.FACTOR),
-            })
+            loss.append((player.id, (player.ranking, self.FACTOR)))
 
         # elo rating
         calculator = EloCalculator()
         game_info = EloGameInfo(self.BASE_ELO, self.BETA)
+
         teams = MatchElo([win, loss], [1, 2])
         new_ratings = calculator.new_ratings(teams, game_info)
 
