@@ -38,8 +38,8 @@ class Match(models.Model):
             winners = self.team_a_players.all()
             lossers = self.team_b_players.all()
         elif self.victory == self.TEAM_B:
-            winners = self.team_a_players.all()
-            lossers = self.team_b_players.all()
+            winners = self.team_b_players.all()
+            lossers = self.team_a_players.all()
         else:
             return obj
 
