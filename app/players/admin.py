@@ -4,8 +4,8 @@ from models import Player, Team
 
 
 class PlayerAdmin(admin.ModelAdmin):
-    readonly_fields = ('victories', 'draws', 'losses', 'ranking',)
-    list_display = ('name', 'ranking', 'victories', 'draws', 'losses')
+    readonly_fields = ('victories', 'losses', 'ranking',)
+    list_display = ('name', 'ranking', 'victories', 'losses')
     ordering = ['-ranking', '-victories']
 
 

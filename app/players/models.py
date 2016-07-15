@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Player(models.Model):
-    user = models.OneToOneField(User, verbose_name=u'user')
+    # user = models.OneToOneField(User, verbose_name=u'user')
     name = models.CharField(u'player name', max_length=255)
     email = models.EmailField(u'e-mail', blank=True, null=True)
     ranking = models.IntegerField(u'ranking', default=1200)

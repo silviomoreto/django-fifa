@@ -81,11 +81,11 @@ STATICFILES_FINDERS = (
 SECRET_KEY = 'n8%a3+ih9ebim#&amp;e_snhcjtk-p)jkw%3$97%0k*om4o)ypn&amp;37'
 
 # List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
+# TEMPLATE_LOADERS = (
+#     'django.template.loaders.filesystem.Loader',
+#     'django.template.loaders.app_directories.Loader',
+# #     'django.template.loaders.eggs.Loader',
+# )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -102,11 +102,14 @@ ROOT_URLCONF = 'app.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'app.wsgi.application'
 
-TEMPLATE_DIRS = (
-    os_path.join(PROJECT_PATH, 'templates'),
-)
+# TEMPLATE_DIRS = (
+#     os_path.join(PROJECT_PATH, 'templates'),
+# )
 
 INSTALLED_APPS = (
+    'material',
+    'material.admin',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -118,7 +121,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 
-    'south',
+    # 'south',
 
     'matchs',
     'players',
@@ -152,5 +155,21 @@ LOGGING = {
         },
     }
 }
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os_path.join(PROJECT_PATH, 'templates'), ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 # from local_settings import *
